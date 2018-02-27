@@ -12,7 +12,7 @@ public class ConstantList {
 	public static final int WIDTH_FORM = 300;
 	public static final int HEIGTH_FORM = 400;
 	public static final int WIDTH_LOG = 250;
-	public static final int HEIGTH_LOG = 300;
+	public static final int HEIGTH_LOG = 430;
 	public static final int WIDTH_STORE = 650;
 	public static final int HEIGTH_STORE = 750;
 	public static final Font WORD_FONT = new Font("font",Font.PLAIN,20);

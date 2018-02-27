@@ -30,6 +30,9 @@ public class PanelSignIn extends JPanel {
 	}
 
 	public void informationPanel() {
+		add(UtilityList.createJButtonText(CommandApp.COMMAND_SELECT_FILE.getCommand(),
+				CommandApp.COMMAND_SELECT_FILE.getTitle(), ConstantList.APP_COLOR, ConstantList.LABEL_FONT,
+				controller));
 		add(UtilityList.createJLabel(ConstantList.NAME, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
 		storeName = new JTextField();
 		storeName.setHorizontalAlignment(JTextField.CENTER);
@@ -45,11 +48,8 @@ public class PanelSignIn extends JPanel {
 		cellPhone.setFont(ConstantList.WORD_FONT);
 		cellPhone.setHorizontalAlignment(JTextField.CENTER);
 		add(cellPhone);
-		add(UtilityList.createJButtonText(CommandApp.COMMAND_SELECT_FILE.getCommand(),
-				CommandApp.COMMAND_SELECT_FILE.getTitle(), ConstantList.APP_COLOR, ConstantList.LABEL_FONT,
-				controller));
-		add(UtilityList.createJButton(CommandApp.COMMAND_ADD_STORE.getCommand(),
-				CommandApp.COMMAND_ADD_STORE.getTitle(), CommandApp.COMMAND_ADD_STORE.getIcon(), controller));
+		add(UtilityList.createJButtonText(CommandApp.COMMAND_ADD_STORE.getCommand(),
+				CommandApp.COMMAND_ADD_STORE.getTitle(), ConstantList.APP_COLOR, ConstantList.LABEL_FONT, controller));
 	}
 
 	public void loadJFileChooser() {
@@ -66,8 +66,8 @@ public class PanelSignIn extends JPanel {
 		String photo = "";
 		if (chooserImg.getSelectedFile() != null) {
 			photo = chooserImg.getSelectedFile().getPath();
-		} 
-		String[] info = {storeName.getText(), pass, cellPhone.getText(), photo};
+		}
+		String[] info = { storeName.getText(), pass, cellPhone.getText(), photo };
 		return info;
 	}
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.ConstantList;
@@ -34,7 +35,7 @@ public class PrincipalFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jPanelSignIn = new PanelSignIn(this.controller);
 		backPanel = new JPanel();
-		setJMenuBar(new JMenuBarUser(controller));
+		setJMenuBar(new MenuBarUser(controller));
 	}
 	
 	public void signIn() {
@@ -67,6 +68,7 @@ public class PrincipalFrame extends JFrame {
 		setResizable(true);
 		setSize(ConstantList.WIDTH_LOG, ConstantList.HEIGTH_LOG);
 		setResizable(false);
+		backPanel.add(new JLabel(new ImageIcon(getClass().getResource(ConstantList.ICON_PATH))));
 		panelLognIn = new PanelLognIn(controller);
 		backPanel.add(panelLognIn);
 		add(backPanel);
@@ -77,7 +79,7 @@ public class PrincipalFrame extends JFrame {
 		backPanel.removeAll();
 		backPanel.updateUI();
 		setResizable(true);
-		setSize(ConstantList.WIDTH_STORE, ConstantList.HEIGTH_HOME);
+		setSize(ConstantList.WIDTH_STORE, ConstantList.HEIGTH_STORE);
 		setResizable(false);
 		panelStore = new PanelStore(store, controller);
 		backPanel.add(panelStore);
