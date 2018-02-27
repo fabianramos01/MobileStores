@@ -14,7 +14,7 @@ public class ConstantList {
 	public static final int WIDTH_LOG = 250;
 	public static final int HEIGTH_LOG = 300;
 	public static final int WIDTH_STORE = 650;
-	public static final int HEIGTH_STORE = 500;
+	public static final int HEIGTH_STORE = 750;
 	public static final Font WORD_FONT = new Font("font",Font.PLAIN,20);
 	public static final Font LABEL_FONT = new Font("font", Font.PLAIN,25);
 	public static final Color APP_COLOR = Color.decode("#0D4873");
