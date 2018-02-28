@@ -38,17 +38,19 @@ public class StoreManager {
 	public ArrayList<String[]> getDateStores(LocalDate initDate, LocalDate endDate) {
 		ArrayList<String[]> incomes = new ArrayList<String[]>();
 		String[] info;
+		int total;
 		for (Store store : stores) {
+			total = 0;
 			for (Bill bill : store.getBills()) {
-				info = new String[4];
 				if (isInRank(initDate, endDate, bill.getDate())) {
-					info[0] = store.getName();
-					info[1] = String.valueOf(bill.getId());
-					info[2] = bill.getStDate();
-					info[3] = String.valueOf(bill.getPrice());
-					incomes.add(info);
+					total += bill.getPrice();
 				}
 			}
+			info = new String[3];
+			info[0] = String.valueOf(store.getId());
+			info[1] = store.getName();
+			info[2] = "$" + String.valueOf(total);
+			incomes.add(info);
 		}
 		return incomes;
 	}

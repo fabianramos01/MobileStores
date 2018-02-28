@@ -14,6 +14,7 @@ import controller.CommandApp;
 import controller.ConstantList;
 import controller.Controller;
 import model.Bill;
+import model.SaleType;
 import model.Store;
 
 public class PanelStore extends JPanel {
@@ -44,17 +45,19 @@ public class PanelStore extends JPanel {
 				panelBills.add(billCard(bill));
 			}
 		} else {
-			panelBills.add(billCard(new Bill(0, "01/01/0001", 0)));
+			panelBills.add(billCard(new Bill(0, "01/01/0001", SaleType.Comida.getTitle(), 0)));
 		}
-		add(new JScrollPane(panelBills), BorderLayout.EAST);
+		add(new JScrollPane(panelBills), BorderLayout.SOUTH);
 	}
 
 	private JPanel billCard(Bill bill) {
-		JPanel jPanel = new JPanel(new GridLayout(6, 1));
+		JPanel jPanel = new JPanel(new GridLayout(4, 2));
 		jPanel.add(UtilityList.createJLabel(ConstantList.ID, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
 		jPanel.add(labelInfo(String.valueOf(bill.getId())));
 		jPanel.add(UtilityList.createJLabel(ConstantList.DATE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
 		jPanel.add(labelInfo(bill.getStDate()));
+		jPanel.add(UtilityList.createJLabel(ConstantList.SALE_TYPE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
+		jPanel.add(labelInfo(String.valueOf(bill.getSaleType().toString())));
 		jPanel.add(UtilityList.createJLabel(ConstantList.PRICE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
 		jPanel.add(labelInfo(String.valueOf("$ " + bill.getPrice())));
 		jPanel.setBorder(BorderFactory.createLineBorder(ConstantList.APP_COLOR));

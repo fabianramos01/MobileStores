@@ -22,13 +22,13 @@ public class Store {
 		bills = new ArrayList<>();
 	}
 	
-	public static Bill createBill(String date, int price) throws ParseException {
+	public static Bill createBill(String date, String saleType, int price) throws ParseException {
 		Random random = new Random();
-		return new Bill(random.nextInt(1000)+1, date, price);
+		return new Bill(random.nextInt(1000)+1, date, saleType, price);
 	}
 	
-	public static Bill createBill(int id, String date, int price) throws ParseException {
-		return new Bill(id, date, price);
+	public static Bill createBill(int id, String date, String saleType, int price) throws ParseException {
+		return new Bill(id, date, saleType, price);
 	}
 	
 	public void addBill(Bill bill) {

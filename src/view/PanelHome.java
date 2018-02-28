@@ -54,7 +54,7 @@ public class PanelHome extends JPanel {
 	}
 
 	public void loadTable(ArrayList<String[]> list) {
-		String[] columnInfo = { ConstantList.NAME, ConstantList.ID, ConstantList.DATE, ConstantList.PRICE };
+		String[] columnInfo = {ConstantList.ID, ConstantList.NAME, ConstantList.PRICE};
 		Object[][] data;
 		if (!list.isEmpty()) {
 			data = new Object[list.size()][columnInfo.length];

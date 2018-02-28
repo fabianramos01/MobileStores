@@ -53,7 +53,6 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (CommandApp.valueOf(e.getActionCommand())) {
 		case COMMAND_ADD_STORE:
@@ -130,7 +129,7 @@ public class Controller implements ActionListener {
 		String[] info = principlaFrame.newBill();
 		Store store = storeManager.getActualStore();
 		try {
-			store.addBill(Store.createBill(info[0], Integer.parseInt(info[1])));
+			store.addBill(Store.createBill(info[0], info[1], Integer.parseInt(info[2]) ));
 			FileManager.saveBills(
 					ConstantList.DATA_PATH + store.getName() + "/" + store.getName() + ConstantList.BILL_XML,
 					store.getBills());

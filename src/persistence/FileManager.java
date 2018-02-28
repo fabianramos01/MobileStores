@@ -75,9 +75,11 @@ public class FileManager {
 			Element billElem = new Element(ConstantList.BILL);
 			Element id = new Element(ConstantList.ID).setText(String.valueOf(bill.getId()));
 			Element date = new Element(ConstantList.DATE).setText(bill.getStDate());
+			Element saleType = new Element(ConstantList.SALE_TYPE_XML).setText(bill.getSaleType().toString());
 			Element price = new Element(ConstantList.PRICE).setText(String.valueOf(bill.getPrice()));
 			billElem.addContent(id);
 			billElem.addContent(date);
+			billElem.addContent(saleType);
 			billElem.addContent(price);
 			doc.getRootElement().addContent(billElem);
 		}
@@ -103,8 +105,9 @@ public class FileManager {
 			for (Element matchElement : billFileList) {
 				int id = Integer.parseInt(matchElement.getChildTextTrim(ConstantList.ID));
 				String date = matchElement.getChildTextTrim(ConstantList.DATE);
+				String saleType = matchElement.getChildTextTrim(ConstantList.SALE_TYPE_XML);
 				int price = Integer.parseInt(matchElement.getChildTextTrim(ConstantList.PRICE));
-				bill = Store.createBill(id, date, price);
+				bill = Store.createBill(id, date, saleType, price);
 				bills.add(bill);
 			}
 		} catch (IOException io) {

@@ -29,6 +29,8 @@ public class ConstantList {
 	public static final String CELLPHONE_XML = "Telefono";
 	public static final String PASSWORD_XML = "Contrasena";
 	public static final String BILL_LIST = "Facturas";
+	public static final String SALE_TYPE = "Tipo de producto";
+	public static final String SALE_TYPE_XML = "TipoDeProducto";
 	public static final String DATE = "Fecha";
 	public static final String PRICE = "Valor";
 	public static final String BILL = "Factura";
