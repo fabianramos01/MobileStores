@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -120,8 +119,8 @@ public class Controller implements ActionListener {
 	}
 
 	private void loadRecord() {
-		LocalDate[] dates = principlaFrame.getDates();
-		list = storeManager.getDateStores(dates[0], dates[1]);
+		list = storeManager.getDateStores(principlaFrame.getYear());
+		principlaFrame.loadReport(storeManager.getPercent(principlaFrame.getYear()));
 		principlaFrame.home(list);
 	}
 

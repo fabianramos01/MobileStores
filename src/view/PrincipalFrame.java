@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -49,17 +48,21 @@ public class PrincipalFrame extends JFrame {
 		setVisible(true);
 	}
 	
-	public void home(ArrayList<String[]> list) {
+	public void home(ArrayList<String[]> storeList) {
 		backPanel.removeAll();
 		backPanel.updateUI();
 		setResizable(true);
 		setSize(ConstantList.WIDTH_HOME, ConstantList.HEIGTH_HOME);
 		setResizable(false);
 		panelHome = new PanelHome(controller);
-		panelHome.loadTable(list);
+		panelHome.loadTable(storeList);
 		backPanel.add(panelHome);
 		add(backPanel);
 		setVisible(true);
+	}
+	
+	public void loadReport(ArrayList<int[]> list) {
+		new DialogReport(list);
 	}
 
 	public void lognIn() {
@@ -107,15 +110,15 @@ public class PrincipalFrame extends JFrame {
 		dialogBill.dispose();
 	}
 	
-	public LocalDate[] getDates() {
-		return panelHome.getDates();
-	}
-	
 	public void resetForm() {
 		jPanelSignIn.resetForm();
 	}
 
 	public String[] lognInInfo() {
 		return panelLognIn.getInfo();
+	}
+
+	public int getYear() {
+		return panelHome.getDate();
 	}
 }

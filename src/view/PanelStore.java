@@ -1,20 +1,21 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 
 import controller.CommandApp;
 import controller.ConstantList;
 import controller.Controller;
 import model.Bill;
-import model.SaleType;
 import model.Store;
 
 public class PanelStore extends JPanel {
@@ -29,46 +30,48 @@ public class PanelStore extends JPanel {
 		panelInfo.add(UtilityList.createJLabel(ConstantList.CELLPHONE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
 		panelInfo.add(labelInfo(store.getcellphone()));
 		panelInfo.add(UtilityList.createJButtonText(CommandApp.COMMAND_DIALOG_BILL.getCommand(),
-				CommandApp.COMMAND_DIALOG_BILL.getTitle(), ConstantList.APP_COLOR, ConstantList.LABEL_FONT, controller));
+				CommandApp.COMMAND_DIALOG_BILL.getTitle(), ConstantList.APP_COLOR, ConstantList.LABEL_FONT,
+				controller));
 		JLabel jLabel = new JLabel(UtilityList.scaledImage(store.getPhoto(), 420));
 		JPanel backgroundPanel = new JPanel(new BorderLayout());
 		backgroundPanel.add(jLabel, BorderLayout.WEST);
 		backgroundPanel.add(panelInfo, BorderLayout.EAST);
-		add(backgroundPanel, BorderLayout.CENTER);
-		loadBills(store.getBills());
+		add(backgroundPanel);
+		loadTable(store.getBills());
 	}
 
-	private void loadBills(ArrayList<Bill> bills) throws ParseException {
-		JPanel panelBills = new JPanel();
+	private JLabel labelInfo(String name) {
+		JLabel jLabel = new JLabel(name);
+		jLabel.setFont(ConstantList.LABEL_FONT);
+		return jLabel;
+	}
+
+	public void loadTable(ArrayList<Bill> bills) {
+		String[] columnInfo = { ConstantList.ID, ConstantList.SALE_TYPE, ConstantList.DATE, ConstantList.PRICE };
+		Object[][] data;
 		if (!bills.isEmpty()) {
-			for (Bill bill : bills) {
-				panelBills.add(billCard(bill));
+			data = new Object[bills.size()][columnInfo.length];
+			for (int i = 0; i < bills.size(); i++) {
+				data[i][0] = bills.get(i).getId();
+				data[i][1] = bills.get(i).getSaleType();
+				data[i][2] = bills.get(i).getStDate();
+				data[i][3] = bills.get(i).getPrice();
 			}
 		} else {
-			panelBills.add(billCard(new Bill(0, "01/01/0001", SaleType.Comida.getTitle(), 0)));
+			data = new Object[1][columnInfo.length];
+			for (int j = 0; j < columnInfo.length; j++) {
+				data[0][j] = "---";
+			}
 		}
-		add(new JScrollPane(panelBills), BorderLayout.SOUTH);
-	}
-
-	private JPanel billCard(Bill bill) {
-		JPanel jPanel = new JPanel(new GridLayout(4, 2));
-		jPanel.add(UtilityList.createJLabel(ConstantList.ID, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
-		jPanel.add(labelInfo(String.valueOf(bill.getId())));
-		jPanel.add(UtilityList.createJLabel(ConstantList.DATE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
-		jPanel.add(labelInfo(bill.getStDate()));
-		jPanel.add(UtilityList.createJLabel(ConstantList.SALE_TYPE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
-		jPanel.add(labelInfo(String.valueOf(bill.getSaleType().toString())));
-		jPanel.add(UtilityList.createJLabel(ConstantList.PRICE, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
-		jPanel.add(labelInfo(String.valueOf("$ " + bill.getPrice())));
-		jPanel.setBorder(BorderFactory.createLineBorder(ConstantList.APP_COLOR));
-		jPanel.setBorder(BorderFactory.createTitledBorder(ConstantList.BILL));
-		return jPanel;
-	}
-	
-	private JLabel labelInfo(String text) {
-		JLabel jLabel = new JLabel(text);
-		jLabel.setFont(ConstantList.WORD_FONT);
-		jLabel.setHorizontalAlignment(JLabel.CENTER);
-		return jLabel;
+		JTable recordTable = new JTable(data, columnInfo);
+		recordTable.setFont(ConstantList.WORD_FONT);
+		JTableHeader header = recordTable.getTableHeader();
+		header.setFont(ConstantList.LABEL_FONT);
+		header.setBackground(ConstantList.APP_COLOR);
+		header.setForeground(Color.WHITE);
+		JPanel jPanel = new JPanel(new BorderLayout());
+		jPanel.add(header, BorderLayout.NORTH);
+		jPanel.add(recordTable, BorderLayout.CENTER);
+		add(new JScrollPane(jPanel));
 	}
 }

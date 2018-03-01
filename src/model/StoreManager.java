@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,44 +34,44 @@ public class StoreManager {
 		return null;
 	}
 
-	public ArrayList<String[]> getDateStores(LocalDate initDate, LocalDate endDate) {
+	public ArrayList<String[]> getDateStores(int year) {
 		ArrayList<String[]> incomes = new ArrayList<String[]>();
 		String[] info;
 		int total;
 		for (Store store : stores) {
 			total = 0;
 			for (Bill bill : store.getBills()) {
-				if (isInRank(initDate, endDate, bill.getDate())) {
+				if ( bill.getDate().getYear() == year) {
 					total += bill.getPrice();
 				}
 			}
-			info = new String[3];
-			info[0] = String.valueOf(store.getId());
-			info[1] = store.getName();
-			info[2] = "$" + String.valueOf(total);
-			incomes.add(info);
+			if (total != 0) {
+				info = new String[3];
+				info[0] = String.valueOf(store.getId());
+				info[1] = store.getName();
+				info[2] = "$" + String.valueOf(total);
+				incomes.add(info);
+			}	
 		}
 		return incomes;
-	}
-
-	private boolean isInRank(LocalDate initDate, LocalDate endDate, LocalDate billDate) {
-		if (billDate.isBefore(endDate) && billDate.isAfter(initDate)) {
-			return true;
-		}
-		return false;
 	}
 
 	public ArrayList<int[]> getPercent(int year) {
 		ArrayList<int[]> list = new ArrayList<>();
 		int[] percent;
 		for (Store store : stores) {
-			percent = new int[4];
+			percent = null;
 			for (Bill bill : store.getBills()) {
 				if (bill.getDate().getYear() == year) {
+					if (percent == null) {
+						percent = new int[4];
+					}
 					percent = addSale(bill, percent);
 				}
 			}
-			list.add(calculatePercent(percent));
+			if (percent != null) {
+				list.add(calculatePercent(percent));
+			}
 		}
 		return list;
 	}

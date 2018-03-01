@@ -7,7 +7,7 @@ public class ConstantList {
 
 	public static final String TITLE = "ManagerMobileStores";
 	public static final String ICON_PATH = "/img/ICONAPP.PNG";
-	public static final int WIDTH_HOME = 1100;
+	public static final int WIDTH_HOME = 1000;
 	public static final int HEIGTH_HOME = 500;
 	public static final int WIDTH_FORM = 300;
 	public static final int HEIGTH_FORM = 400;
@@ -15,6 +15,8 @@ public class ConstantList {
 	public static final int HEIGTH_LOG = 430;
 	public static final int WIDTH_STORE = 650;
 	public static final int HEIGTH_STORE = 750;
+	public static final int WIDTH_REPORT = 700;
+	public static final int HEIGTH_REPORT = 700;
 	public static final Font WORD_FONT = new Font("font",Font.PLAIN,20);
 	public static final Font LABEL_FONT = new Font("font", Font.PLAIN,25);
 	public static final Color APP_COLOR = Color.decode("#0D4873");

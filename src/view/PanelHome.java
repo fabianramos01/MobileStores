@@ -23,8 +23,7 @@ public class PanelHome extends JPanel {
 	private Controller controller;
 	private JPanel panelSeacrh;
 	private JTable recordTable;
-	private JCalendarCombo initDate;
-	private JCalendarCombo endDate;
+	private JCalendarCombo date;
 
 	public PanelHome(Controller controller) {
 		this.controller = controller;
@@ -36,14 +35,10 @@ public class PanelHome extends JPanel {
 		panelSeacrh = new JPanel();
 		panelSeacrh.add(
 				UtilityList.createJLabel(ConstantList.SET_RECORD, ConstantList.LABEL_FONT, ConstantList.APP_COLOR));
-		initDate = new JCalendarCombo();
-		initDate.setFont(ConstantList.WORD_FONT);
-		initDate.setToolTipText(ConstantList.INIT_DATE);
-		panelSeacrh.add(initDate);
-		endDate = new JCalendarCombo();
-		endDate.setFont(ConstantList.WORD_FONT);
-		endDate.setToolTipText(ConstantList.END_DATE);
-		panelSeacrh.add(endDate);
+		date = new JCalendarCombo();
+		date.setFont(ConstantList.WORD_FONT);
+		date.setToolTipText(ConstantList.INIT_DATE);
+		panelSeacrh.add(date);
 		panelSeacrh.add(UtilityList.createJButtonText(CommandApp.COMMAND_LOAD_RECORD.getCommand(),
 				CommandApp.COMMAND_LOAD_RECORD.getTitle(), ConstantList.APP_COLOR, ConstantList.LABEL_FONT,
 				controller));
@@ -84,10 +79,8 @@ public class PanelHome extends JPanel {
 		add(jPanel, BorderLayout.CENTER);
 	}
 
-	public LocalDate[] getDates() {
-		LocalDate dateOne = initDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate dateTwo = endDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate[] localDates = { dateOne, dateTwo };
-		return localDates;
+	public int getDate() {
+		LocalDate dateYear = date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return dateYear.getYear();
 	}
 }
