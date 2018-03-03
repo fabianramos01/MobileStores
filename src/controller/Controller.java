@@ -3,17 +3,10 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import model.Bill;
 import model.Store;
@@ -25,13 +18,12 @@ public class Controller implements ActionListener {
 
 	private StoreManager storeManager;
 	private PrincipalFrame principlaFrame;
-	private ArrayList<String[]> list;
 
 	public Controller() {
 		storeManager = new StoreManager();
 		principlaFrame = new PrincipalFrame(this);
 		loadFile();
-		principlaFrame.home(new ArrayList<String[]>());
+		principlaFrame.home();
 	}
 
 	private void loadFile() {
@@ -76,59 +68,30 @@ public class Controller implements ActionListener {
 			principlaFrame.lognIn();
 			break;
 		case COMMAND_PRINCIPAL_PANEL:
-			principlaFrame.home(new ArrayList<String[]>());
+			principlaFrame.home();
 			break;
 		case COMMAND_DIALOG_BILL:
 			principlaFrame.loadDialogBill();
 			break;
 		case COMMAND_DOWNLOAD_RECORD:
-			generatePDF();
 			break;
 		}
 	}
 
-	private void generatePDF() {
-		try {
-			FileOutputStream pdfFile = new FileOutputStream(ConstantList.PDF);
-			Document doc = new Document();
-			PdfWriter.getInstance(doc, pdfFile);
-			doc.open();
-			doc.add(getTable());
-			doc.close();
-			JOptionPane.showMessageDialog(null, ConstantList.DOWNLOAD_CONFIRMATION, ConstantList.OK,
-					JOptionPane.INFORMATION_MESSAGE);
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (DocumentException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-	private PdfPTable getTable() {
-		PdfPTable table = new PdfPTable(4);
-		table.addCell(ConstantList.NAME);
-		table.addCell(ConstantList.ID);
-		table.addCell(ConstantList.DATE);
-		table.addCell(ConstantList.PRICE);
-		for (String[] info : list) {
-			for (int i = 0; i < info.length; i++) {
-				table.addCell(info[i]);
-			}
-		}
-		return table;
-	}
-
 	private void loadRecord() {
-		list = storeManager.getDateStores(principlaFrame.getYear());
 		principlaFrame.loadReport(storeManager.getPercent(principlaFrame.getYear()));
-		principlaFrame.home(list);
+		principlaFrame.home();
+		for (Store store : storeManager.getStores()) {
+			principlaFrame.addTable(storeManager.getDateStores(principlaFrame.getYear(), store));
+		}
+
 	}
 
 	private void addNewBill() {
 		String[] info = principlaFrame.newBill();
 		Store store = storeManager.getActualStore();
 		try {
-			store.addBill(Store.createBill(info[0], info[1], Integer.parseInt(info[2]) ));
+			store.addBill(Store.createBill(info[0], info[1], Integer.parseInt(info[2])));
 			FileManager.saveBills(
 					ConstantList.DATA_PATH + store.getName() + "/" + store.getName() + ConstantList.BILL_XML,
 					store.getBills());

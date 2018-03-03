@@ -34,26 +34,57 @@ public class StoreManager {
 		return null;
 	}
 
-	public ArrayList<String[]> getDateStores(int year) {
+	public ArrayList<String[]> getDateStores(int year, Store store) {
 		ArrayList<String[]> incomes = new ArrayList<String[]>();
-		String[] info;
-		int total;
-		for (Store store : stores) {
-			total = 0;
-			for (Bill bill : store.getBills()) {
-				if ( bill.getDate().getYear() == year) {
-					total += bill.getPrice();
-				}
+		for (int i = 0; i < 4; i++) {
+			incomes.add(new String[5]);
+		}
+		for (String[] strings : incomes) {
+			for (int i = 0; i < strings.length; i++) {
+				strings[i] = "";
 			}
-			if (total != 0) {
-				info = new String[3];
-				info[0] = String.valueOf(store.getId());
-				info[1] = store.getName();
-				info[2] = "$" + String.valueOf(total);
-				incomes.add(info);
-			}	
+		}
+		for (Bill bill : store.getBills()) {
+			if (bill.getDate().getYear() == year) {
+				addTableSale(incomes, bill.getSaleType(), bill.getPrice());
+			}
 		}
 		return incomes;
+	}
+
+	private void addTableSale(ArrayList<String[]> info, SaleType saleType, int value) {
+		switch (SaleType.valueOf(saleType.toString())) {
+		case Comida:
+			addType(info.get(0), saleType, value);
+			break;
+		case Material_educativo:
+			addType(info.get(1), saleType, value);
+			break;
+		case Artesanias:
+			addType(info.get(2), saleType, value);
+			break;
+		case Otros:
+			addType(info.get(3), saleType, value);
+			break;
+		}
+	}
+
+	private void addType(String[] type, SaleType saleType, int value) {
+		type[0] = saleType.toString();
+		if (!type[1].equals("")) {
+			type[1] = Integer.parseInt(type[1]) + 1 + "";
+			type[2] = Integer.parseInt(type[2]) + value + "";
+		} else {
+			type[1] = String.valueOf(1);
+			type[2] = String.valueOf(value);
+		}
+		type[3] = String.valueOf(saleType.getIva());
+		type[4] = calculateTotal(Integer.parseInt(type[2]), saleType.getIva()) + "";
+
+	}
+
+	private int calculateTotal(int subtotal, int tax) {
+		return subtotal + (subtotal * tax / 100);
 	}
 
 	public ArrayList<int[]> getPercent(int year) {
@@ -75,14 +106,14 @@ public class StoreManager {
 		}
 		return list;
 	}
-	
+
 	private int[] calculatePercent(int[] sales) {
 		int total = 0;
 		for (int i = 0; i < sales.length; i++) {
 			total += sales[i];
 		}
 		for (int i = 0; i < sales.length; i++) {
-			sales[i] = sales[i]*100/total;
+			sales[i] = sales[i] * 100 / total;
 		}
 		return sales;
 

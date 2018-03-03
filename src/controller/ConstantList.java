@@ -51,5 +51,11 @@ public class ConstantList {
 	public static final String DATA_PATH = "data/";
 	public static final String ERROR_INFO = "Información incorrecta";
 	public static final String DOWNLOAD_CONFIRMATION = "Registro descargado";
-	public static String PDF = "record.pdf";
+	public static final String PDF = "record.pdf";
+	
+	public static final String TYPE = "Tipo";
+	public static final String UNIT = "Unidades";
+	public static final String SUBTOTAL = "Subtotal";
+	public static final String TAX = "Impuesto";
+	public static final String TOTAL = "Total";
 }

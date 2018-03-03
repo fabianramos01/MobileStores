@@ -22,7 +22,6 @@ public class PanelHome extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JPanel panelSeacrh;
-	private JTable recordTable;
 	private JCalendarCombo date;
 
 	public PanelHome(Controller controller) {
@@ -46,10 +45,12 @@ public class PanelHome extends JPanel {
 		add(UtilityList.createJButton(CommandApp.COMMAND_DOWNLOAD_RECORD.getCommand(),
 				CommandApp.COMMAND_DOWNLOAD_RECORD.getTitle(), CommandApp.COMMAND_DOWNLOAD_RECORD.getIcon(),
 				controller), BorderLayout.SOUTH);
+		loadTable(new ArrayList<String[]>());
 	}
 
 	public void loadTable(ArrayList<String[]> list) {
-		String[] columnInfo = {ConstantList.ID, ConstantList.NAME, ConstantList.PRICE};
+		String[] columnInfo = { ConstantList.TYPE, ConstantList.UNIT, ConstantList.SUBTOTAL, ConstantList.TAX,
+				ConstantList.TOTAL};
 		Object[][] data;
 		if (!list.isEmpty()) {
 			data = new Object[list.size()][columnInfo.length];
@@ -66,7 +67,7 @@ public class PanelHome extends JPanel {
 				data[0][j] = "---";
 			}
 		}
-		recordTable = new JTable(data, columnInfo);
+		JTable recordTable = new JTable(data, columnInfo);
 		recordTable.setFont(ConstantList.WORD_FONT);
 		JTableHeader header = recordTable.getTableHeader();
 		header.setFont(ConstantList.LABEL_FONT);
@@ -76,7 +77,7 @@ public class PanelHome extends JPanel {
 		jPanel.add(header, BorderLayout.NORTH);
 		jPanel.add(recordTable, BorderLayout.CENTER);
 		jPanel.setBorder(BorderFactory.createLineBorder(ConstantList.APP_COLOR));
-		add(jPanel, BorderLayout.CENTER);
+		add(jPanel);
 	}
 
 	public int getDate() {

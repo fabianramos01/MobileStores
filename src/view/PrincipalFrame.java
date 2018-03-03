@@ -48,17 +48,20 @@ public class PrincipalFrame extends JFrame {
 		setVisible(true);
 	}
 	
-	public void home(ArrayList<String[]> storeList) {
+	public void home() {
 		backPanel.removeAll();
 		backPanel.updateUI();
 		setResizable(true);
 		setSize(ConstantList.WIDTH_HOME, ConstantList.HEIGTH_HOME);
 		setResizable(false);
 		panelHome = new PanelHome(controller);
-		panelHome.loadTable(storeList);
 		backPanel.add(panelHome);
 		add(backPanel);
 		setVisible(true);
+	}
+	
+	public void addTable(ArrayList<String[]> storeList) {
+		panelHome.loadTable(storeList);
 	}
 	
 	public void loadReport(ArrayList<int[]> list) {

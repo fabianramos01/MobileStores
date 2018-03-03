@@ -33,7 +33,6 @@ public class Bill {
 			this.saleType = SaleType.Otros;
 			break;
 		}
-		
 	}
 
 	private void setBirthDate(String stDate) throws ParseException {
